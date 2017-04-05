@@ -41,12 +41,12 @@ app.get('/api/:username', function(req, res) {
 
         getUserData(username)
           .then(stringifyUserData)
-          .then(function(totalRepos) {
+          .then(function(jsonData) {
   			//expires 1 min
-            client.setex(username, 60, totalRepos);
+            client.setex(username, 60, jsonData);
            
 
-            res.send(decodeAndAddSource(totalRepos,"API"));
+            res.send(decodeAndAddSource(jsonData,"API"));
           }).catch(function(response) {
             if (response.status === 404){
               res.send('Not found');
